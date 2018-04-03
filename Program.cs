@@ -44,6 +44,17 @@ namespace ML
             knn.PrintAccuracy(machine_knn, testInput, testOutput);
             knn.PrintProbabilities(testInput, testOutput);
 
+            //double loss = new ZeroOneLoss(testOutput).Loss(predicted_knn);
+
+            //var cv = CrossValidation.Create(
+            //    k: 10,
+            //    learner: machine_knn,
+            //    loss: (actual, expected, p) => new ZeroOneLoss(expected).Loss(actual),
+            //    fit: (teacher, x, y, w) => teacher.Learn(x, y, w),
+            //    x: testInput, 
+            //    y: testOutput
+            //);
+
             Console.ReadLine();
         }
     }
