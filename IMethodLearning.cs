@@ -19,30 +19,30 @@ using Accord.Statistics.Models.Regression;
 
 namespace ML
 {
-    interface IMethodLearning
+    interface IMethodLearning<T>
     {
         /// <summary>
         /// Обучающаяся выборка
         /// </summary>
-        DataTable data_train { get; set; }
+        DataTable DataTrain { get; set; }
         /// <summary>
         /// Тестовая выборка
         /// </summary>
-        DataTable data_test { get; set; }
+        DataTable DataTest { get; set; }
 
         /// <summary>
         /// Конвертация значений к параметрам, с которыми можно работать
         /// </summary>
         /// <param name="data">Выборка</param>
         /// <returns></returns>
-        double[][] ConvertToInput();
+        double[][] ConvertToInput(DataTable data);
 
         /// <summary>
         /// Конвертация целевых переменных к параметрам, с которыми можно работать
         /// </summary>
         /// <param name="data">Выборка</param>
         /// <returns></returns>
-        int[] ConvertToOutput();
+        int[] ConvertToOutput(DataTable data);
 
         /// <summary>
         /// Обучение 
@@ -50,7 +50,7 @@ namespace ML
         /// <param name="trainInputs">входная выборка</param>
         /// <param name="trainOutputs">целевые переменные</param>
         /// <returns></returns>
-        void MachineLearning(double[][] trainInputs, int[] trainOutputs);
+        T MachineLearning(double[][] trainInputs, int[] trainOutputs);
 
         /// <summary>
         /// Вывод полученных и ожидаемых значений
@@ -64,13 +64,13 @@ namespace ML
         /// </summary>
         /// <param name="testInputs"></param>
 
-        void PrintProbabilities(int[] testInputs);
+        void PrintProbabilities(double[][] testInputs, int[] testOutputs);
 
         /// <summary>
         /// Вывод точности
         /// </summary>
         /// <param name="predicted">Предсказанные значения</param>
         /// <param name="testOutputs">Истинные значения</param>
-        void PrintAccuracy(int[] predicted, int[] testOutputs);
+        void PrintAccuracy(T classifier, double[][] testInputs, int[] testOutputs);
     }
 }
