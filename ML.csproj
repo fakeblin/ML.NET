@@ -81,14 +81,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMethodLearning.cs" />
+    <Compile Include="kNN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="test.csv" />
+    <None Include="test_lite.csv" />
     <None Include="train.csv" />
+    <None Include="train_lite.csv" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License-LGPL.txt" />

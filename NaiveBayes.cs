@@ -21,12 +21,11 @@ using System.IO;
 using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
-
 namespace ML
 {
-    class Program
+    class NaiveBayes
     {
-        static void Main(string[] args)
+        public NaiveBayes()
         {
             DataTable data_train = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv", true).ToTable();
             DataTable data_test = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train_lite.csv", true).ToTable();
@@ -72,7 +71,7 @@ namespace ML
             //calculate the accuracy
             double error = new ZeroOneLoss(testOutputs).Loss(predicted);
 
-            Console.WriteLine("\n Accuracy: {0} (cm.Accuracy:{1}) (cm.Error:{2}) (cm.Kappa:{3})", 
+            Console.WriteLine("\n Accuracy: {0} (cm.Accuracy:{1}) (cm.Error:{2}) (cm.Kappa:{3})",
                 1 - error, cm.Accuracy, cm.Error, cm.Kappa);
 
             // Create a Conjugate Gradient GradientDescent algorithm to estimate the regression
