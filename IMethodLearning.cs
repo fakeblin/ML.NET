@@ -22,27 +22,14 @@ namespace ML
     interface IMethodLearning<T>
     {
         /// <summary>
-        /// Обучающаяся выборка
+        /// Обучающаяся выборка - входные параметры
         /// </summary>
-        DataTable DataTrain { get; set; }
-        /// <summary>
-        /// Тестовая выборка
-        /// </summary>
-        DataTable DataTest { get; set; }
+        public double[][] DataTrainInput { get; set; }
 
         /// <summary>
-        /// Конвертация значений к параметрам, с которыми можно работать
+        /// Обучающаяся выборка - входные параметры
         /// </summary>
-        /// <param name="data">Выборка</param>
-        /// <returns></returns>
-        double[][] ConvertToInput(DataTable data);
-
-        /// <summary>
-        /// Конвертация целевых переменных к параметрам, с которыми можно работать
-        /// </summary>
-        /// <param name="data">Выборка</param>
-        /// <returns></returns>
-        int[] ConvertToOutput(DataTable data);
+        public int[] DataTrainOutput { get; set; }
 
         /// <summary>
         /// Обучение 
@@ -50,27 +37,6 @@ namespace ML
         /// <param name="trainInputs">входная выборка</param>
         /// <param name="trainOutputs">целевые переменные</param>
         /// <returns></returns>
-        T MachineLearning(double[][] trainInputs, int[] trainOutputs);
-
-        /// <summary>
-        /// Вывод полученных и ожидаемых значений
-        /// </summary>
-        /// <param name="predicted">Предсказанные значения</param>
-        /// <param name="testOutputs">Истинные значения</param>
-        void PrintPredicted(int[] predicted, int[] testOutputs);
-
-        /// <summary>
-        /// Вывод вероятности принадлежности каждого объекта к каждому классу
-        /// </summary>
-        /// <param name="testInputs"></param>
-
-        void PrintProbabilities(double[][] testInputs, int[] testOutputs);
-
-        /// <summary>
-        /// Вывод точности
-        /// </summary>
-        /// <param name="predicted">Предсказанные значения</param>
-        /// <param name="testOutputs">Истинные значения</param>
-        void PrintAccuracy(T classifier, double[][] testInputs, int[] testOutputs);
+        T MachineLearning();
     }
 }

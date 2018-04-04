@@ -28,21 +28,38 @@ namespace ML
     {
         static void Main(string[] args)
         {
-            var knn = new kNN(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv",
-                @"H:\Documents\Visual Studio 2015\Projects\ML\ML\train_lite.csv", 4);
+            DataTable data_train = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv", true).ToTable();
+            DataTable data_test = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train_lite.csv", true).ToTable();
 
-            var trainOutput = knn.ConvertToOutput(knn.DataTrain);
-            var trainInput = knn.ConvertToInput(knn.DataTrain);
+            int[] trainOutputs = data_train.Columns["label"].ToArray<int>();
+            data_train.Columns.Remove("label");
+            double[][] trainInputs = data_train.ToJagged<double>();
 
-            var testOutput = knn.ConvertToOutput(knn.DataTest);
-            var testInput = knn.ConvertToInput(knn.DataTest);
+            int[] testOutputs = data_test.Columns["label"].ToArray<int>();
+            data_test.Columns.Remove("label");
+            double[][] testInputs = data_test.ToJagged<double>();
 
-            var machine_knn = knn.MachineLearning(trainInput, trainOutput);
-            int [] predicted_knn = machine_knn.Decide(testInput);
 
-            knn.PrintPredicted(predicted_knn, testOutput);
-            knn.PrintAccuracy(machine_knn, testInput, testOutput);
-            knn.PrintProbabilities(testInput, testOutput);
+
+            var knn = new KNN(trainInputs, trainOutputs, 4);
+            var machine_knn = knn.MachineLearning();
+            int [] predicted_knn = machine_knn.Decide(testInputs);
+
+            PrintResultsСlassifier show_knn = new PrintResultsСlassifier(machine_knn, testInputs, testOutputs);
+            show_knn.PrintPredicted(predicted_knn);
+            show_knn.PrintAccuracy();
+            show_knn.PrintProbabilities();
+
+            Console.WriteLine("BEGIN NaiveBayes");
+
+            var nb = new NB(trainInputs, trainOutputs);
+            var machine_nb = nb.MachineLearning();
+            int[] predicted_nb = machine_nb.Decide(testInputs);
+
+            PrintResultsСlassifier show_nb = new PrintResultsСlassifier(machine_nb, testInputs, testOutputs);
+            show_nb.PrintPredicted(predicted_knn);
+            show_nb.PrintAccuracy();
+            show_nb.PrintProbabilities();
 
             //double loss = new ZeroOneLoss(testOutput).Loss(predicted_knn);
 
