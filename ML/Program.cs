@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
+using System.Data;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 using Accord.Statistics.Models.Regression.Linear;
 using Accord.Statistics.Analysis;
 using Accord.IO;
 using Accord.Math;
-using System.Data;
 using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Math.Optimization.Losses;
 using Accord.Statistics.Kernels;
@@ -17,7 +22,6 @@ using Accord.MachineLearning.DecisionTrees;
 using Accord.Math.Optimization;
 using Accord.MachineLearning.DecisionTrees.Learning;
 using Accord.Statistics.Filters;
-using System.IO;
 using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
@@ -30,27 +34,38 @@ namespace ML
     {
         static void Main(string[] args)
         {
-            DataTable data_train = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv", true).ToTable();
-            DataTable data_test = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\test.csv", true).ToTable();
+            ImageToCSV itc = new ImageToCSV();
+            Bitmap[] bm = itc.InitImages(1);
+            itc.GetPixelImages(bm);
+            itc.SaveCSV();
 
-            int[] trainOutputs = data_train.Columns["label"].ToArray<int>();
-            data_train.Columns.Remove("label");
-            double[][] trainInputs = data_train.ToJagged<double>();
+           // DataTable data_train = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv", true).ToTable();
+           // DataTable data_test = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\test.csv", true).ToTable();
 
-           // int[] testOutputs = data_test.Columns["label"].ToArray<int>();
-            //data_test.Columns.Remove("label");
-            double[][] testInputs = data_test.ToJagged<double>();
+           // int[] trainOutputs = data_train.Columns["label"].ToArray<int>();
+           // data_train.Columns.Remove("label");
+           // double[][] trainInputs = data_train.ToJagged<double>();
+
+           //// int[] testOutputs = data_test.Columns["label"].ToArray<int>();
+           // //data_test.Columns.Remove("label");
+           // double[][] testInputs = data_test.ToJagged<double>();
 
 
 
-            var knn = new KNN(trainInputs, trainOutputs, 4);
-            var machine_knn = knn.MachineLearning();
-            int[] predicted_knn = machine_knn.Decide(testInputs);
+           // var knn = new KNN(trainInputs, trainOutputs, 4);
+           // var machine_knn = knn.MachineLearning();
+           // int[] predicted_knn = machine_knn.Decide(testInputs);
 
-            PrintResultsСlassifier show_knn = new PrintResultsСlassifier(machine_knn, testInputs);//, testOutputs);
+           // PrintResultsСlassifier show_knn = new PrintResultsСlassifier(machine_knn, testInputs);//, testOutputs);
+
+           // show_knn.PrintProbabilities();
+
+
+
+
+
             //show_knn.PrintPredicted(predicted_knn);
             //show_knn.PrintAccuracy();
-            show_knn.PrintProbabilities();
 
             //Console.WriteLine("BEGIN NaiveBayes");
 
@@ -103,7 +118,7 @@ namespace ML
             //// If desired, compute an aggregate confusion matrix for the validation sets:
             //GeneralConfusionMatrix gcm = result.ToConfusionMatrix(inputs, outputs);
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
