@@ -17,7 +17,7 @@ using Accord.Statistics.Models.Regression.Fitting;
 using Accord.Math.Optimization;
 using Accord.Statistics.Models.Regression;
 
-namespace ML
+namespace ML.Classifier
 {
     /// <summary>
     /// Метод к ближайших соседей
@@ -27,12 +27,12 @@ namespace ML
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public double[][] DataTrainInput { get; set; }
+        public double[][] DataTrainInput { get; }
 
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public int[] DataTrainOutput { get; set; }
+        public int[] DataTrainOutput { get; }
 
         /// <summary>
         /// Кол-во соседей

@@ -21,7 +21,8 @@ using System.IO;
 using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
-namespace ML
+
+namespace ML.Classifier
 {
     /// <summary>
     /// Наивный байесовский классификатор
@@ -31,12 +32,12 @@ namespace ML
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public double[][] DataTrainInput { get; set; }
+        public double[][] DataTrainInput { get; }
 
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public int[] DataTrainOutput { get; set; }
+        public int[] DataTrainOutput { get; }
 
         public NB(double[][] dataTrainInput, int[] dataTrainOutput)
         {

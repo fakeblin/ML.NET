@@ -40,7 +40,7 @@ namespace ML
         /// <param name="n">кол-во изображений</param>
         /// <param name="path">путь</param>
         /// <returns></returns>
-        public Bitmap[] InitImages(int n = 350, string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\image\mnist\testSample")
+        public Bitmap[] InitImages(int n = 350, string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\Image\mnist\testSample")
         {
             string[] filename = new string[n];
             Bitmap[] img = new Bitmap[n];
@@ -98,7 +98,7 @@ namespace ML
         }
 
 
-        public void SaveCSV(string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\csv\testConverted\")
+        public void SaveCSV(string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\CSV\testConverted\")
         {
             string time_before = DateTime.Now.ToString();
             string time_after = "";

@@ -12,7 +12,7 @@ using Accord.Controls;
 using Accord.MachineLearning;
 using Accord.MachineLearning.VectorMachines;
 
-namespace ML
+namespace ML.Classifier
 {
     /// <summary>
     /// Метод опорных векторов
@@ -22,12 +22,12 @@ namespace ML
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public double[][] DataTrainInput { get; set; }
+        public double[][] DataTrainInput { get; }
 
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        public int[] DataTrainOutput { get; set; }
+        public int[] DataTrainOutput { get; }
 
         public SVM(double[][] dataTrainInput, int[] dataTrainOutput)
         {

@@ -17,19 +17,19 @@ using Accord.Statistics.Models.Regression.Fitting;
 using Accord.Math.Optimization;
 using Accord.Statistics.Models.Regression;
 
-namespace ML
+namespace ML.Classifier
 {
     interface IMethodLearning<T>
     {
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        double[][] DataTrainInput { get; set; }
+        double[][] DataTrainInput { get; }
 
         /// <summary>
         /// Обучающаяся выборка - входные параметры
         /// </summary>
-        int[] DataTrainOutput { get; set; }
+        int[] DataTrainOutput { get; }
 
         /// <summary>
         /// Обучение 
