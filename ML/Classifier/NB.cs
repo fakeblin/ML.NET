@@ -1,24 +1,4 @@
-﻿using System;
-using System.Linq;
-using Accord.Statistics.Models.Regression.Linear;
-using Accord.Statistics.Analysis;
-using Accord.IO;
-using Accord.Math;
-using System.Data;
-using Accord.MachineLearning.VectorMachines.Learning;
-using Accord.Math.Optimization.Losses;
-using Accord.Statistics.Kernels;
-using Accord.Controls;
-using Accord.MachineLearning;
-using Accord.MachineLearning.VectorMachines;
-using Accord.Statistics.Models.Regression;
-using Accord.Statistics.Models.Regression.Fitting;
-using Accord.MachineLearning.DecisionTrees;
-using Accord.Math.Optimization;
-using Accord.MachineLearning.DecisionTrees.Learning;
-using Accord.Statistics.Filters;
-using System.IO;
-using Accord.MachineLearning.Bayes;
+﻿using Accord.MachineLearning.Bayes;
 using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
 
@@ -29,14 +9,8 @@ namespace ML.Classifier
     /// </summary>
     class NB : IMethodLearning<NaiveBayes<NormalDistribution>>
     {
-        /// <summary>
-        /// Обучающаяся выборка - входные параметры
-        /// </summary>
         public double[][] DataTrainInput { get; }
 
-        /// <summary>
-        /// Обучающаяся выборка - входные параметры
-        /// </summary>
         public int[] DataTrainOutput { get; }
 
         public NB(double[][] dataTrainInput, int[] dataTrainOutput)

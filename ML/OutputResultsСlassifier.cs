@@ -44,14 +44,14 @@ namespace ML
         /// <param name="testOutputs">Истинные значения</param>
         public void PrintPredicted(int[] predicted)
         {
-            int i = 0;
+            int i = 0;           
             if (TestOutputs.Length == 0)
             {
-                Console.WriteLine("results: (counter of numbers, predict)");
+                Console.WriteLine("results for {0}: (counter of numbers, predict)", Сlassifier);
             }
             else
             {
-                Console.WriteLine("results: (predict, real labels)");
+                Console.WriteLine("results for {0}: (predict, real labels)", Сlassifier);
             }
 
             foreach (int pred in predicted)
@@ -76,7 +76,7 @@ namespace ML
         public void PrintAccuracy()
         {
             var cm = GeneralConfusionMatrix.Estimate(Сlassifier, TestInputs, TestOutputs);
-            Console.WriteLine("Accuracy: {0}", Math.Round(cm.Accuracy, 3)*100);
+            Console.WriteLine("Accuracy for {0}: {1} %", Сlassifier, Math.Round(cm.Accuracy, 3) * 100);
         }
 
         /// <summary>
@@ -87,6 +87,7 @@ namespace ML
         {
             double[][] probabilities = mlr.Probabilities(TestInputs);
 
+            Console.WriteLine("Probabilities for {0}", Сlassifier);
             for (int m = 0; m < probabilities.Count(); m++)
             {
                 for (int n = 0; n < probabilities[m].Count(); n++)
@@ -98,37 +99,36 @@ namespace ML
 
         private string InitialTime()
         {
-            string time_before = DateTime.Now.ToString();
-            string time_after = "";
+            string timeBefore = DateTime.Now.ToString();
+            string timeAfter = "";
 
-            foreach (char c in time_before)
+            foreach (char c in timeBefore)
             {
                 if (c == ' ')
-                    time_after += '-';
+                    timeAfter += '-';
                 else if (c == ':')
-                    time_after += '_';
+                    timeAfter += '_';
                 else
-                    time_after += c;
+                    timeAfter += c;
             }
-            return time_after;
+            return timeAfter;
         }
 
         public void SaveProbabilities(MultinomialLogisticRegression mlr, string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\SaveResults\")
         {
-            string time_after = InitialTime();
-
-           // using (new FileStream(path + time_after + "_Probabilities" +".txt", FileMode.CreateNew)) { }
-
+            string timeAfter = InitialTime();
             double[][] probabilities = mlr.Probabilities(TestInputs);
 
             for (int m = 0; m < probabilities.Count(); m++)
             {
                 for (int n = 0; n < probabilities[m].Count(); n++)
                 {
-                    using(FileStream fs = new FileStream(path + time_after + "_Probabilities" + ".txt", FileMode.CreateNew))
+                    using (FileStream fs = new FileStream(path + timeAfter + "_Probabilities" + Сlassifier + ".txt", FileMode.Append))
                     {
-                        StreamWriter writer = new StreamWriter(fs);
-                        writer.WriteLine("([{0}, {1}]: {2})", m, n, probabilities[m][n]);
+                        using (StreamWriter writer = new StreamWriter(fs))
+                        {
+                            writer.WriteLine("([{0}, {1}]: {2})", m, n, probabilities[m][n]);
+                        }
                     }
                 }
             }
@@ -136,60 +136,70 @@ namespace ML
 
         public void SaveAccuracy(string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\SaveResults\")
         {
-            string time_after = InitialTime();
+            string timeAfter = InitialTime();
 
             var cm = GeneralConfusionMatrix.Estimate(Сlassifier, TestInputs, TestOutputs);
 
-            using (FileStream fs = new FileStream(path + time_after + "_Accuracy" + ".txt", FileMode.CreateNew))
+            using (FileStream fs = new FileStream(path + timeAfter + "_Accuracy" + Сlassifier + ".txt", FileMode.CreateNew))
             {
-                StreamWriter writer = new StreamWriter(fs);
-                writer.WriteLine("Accuracy: {0}", Math.Round(cm.Accuracy, 3) * 100);
+                using (StreamWriter writer = new StreamWriter(fs))
+                {
+                    writer.WriteLine("Accuracy for {0}: {1} %", Сlassifier, Math.Round(cm.Accuracy, 3) * 100);
+                }
             }
         }
 
         public void SavePredicted(int[] predicted, string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\SaveResults\")
         {
-            string time_after = InitialTime();
+            string timeAfter = InitialTime();
+            int i = 0;
 
-
-                int i = 0;
+            foreach (int pred in predicted)
+            {
                 if (TestOutputs.Length == 0)
                 {
-                    using (FileStream fs = new FileStream(path + time_after + "_Predicted" + ".txt", FileMode.CreateNew))
+                    using (FileStream fs = new FileStream(path + timeAfter + "_Predicted" + Сlassifier + ".txt", FileMode.Append))
                     {
-                    StreamWriter writer = new StreamWriter(fs);
-                    writer.WriteLine("results: (counter of numbers, predict)");
+                        using (StreamWriter writer = new StreamWriter(fs))
+                        {
+                            if (i == 0)
+                            {
+                                writer.WriteLine("results: (counter of numbers, predict)");
+                            }
+                            else if (i != 0 && i % 20 == 0)
+                            {
+                                writer.WriteLine("({0},{1}) ", i, pred);
+                            }
+                            else
+                            {
+                                writer.Write("({0},{1}) ", i, pred);
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    using (FileStream fs = new FileStream(path + time_after + "_Predicted" + ".txt", FileMode.CreateNew))
+                    using (FileStream fs = new FileStream(path + timeAfter + "_Predicted" + Сlassifier + ".txt", FileMode.Append))
                     {
-                        StreamWriter writer = new StreamWriter(fs);
-                        writer.WriteLine("results: (predict, real labels)");
-                    }
-                }
-
-                foreach (int pred in predicted)
-                {
-                    if (TestOutputs.Length == 0)
-                    {
-                        using (FileStream fs = new FileStream(path + time_after + "_Predicted" + ".txt", FileMode.Append))
+                        using (StreamWriter writer = new StreamWriter(fs))
                         {
-                            StreamWriter writer = new StreamWriter(fs);
-                            writer.WriteLine("({0}, {1}) ", i, pred);
-                        }
-                    }
-                    else
-                    {
-                        using (FileStream fs = new FileStream(path + time_after + "_Predicted" + ".txt", FileMode.Append))
-                        {
-                            StreamWriter writer = new StreamWriter(fs);
-                            writer.WriteLine("({0},{1}) ", pred, TestOutputs[i]);
+                            if (i == 0)
+                            {
+                                writer.WriteLine("results: (predict, real labels)");
+                            }
+                            else if (i != 0 && i % 20 == 0)
+                            {
+                                writer.WriteLine("({0},{1}) ", pred, TestOutputs[i]);
+                            }
+                            else
+                            {
+                                writer.Write("({0},{1}) ", i, pred);
+                            }
                         }
                     }
                     i++;
                 }
+            }
         }
     }
 }

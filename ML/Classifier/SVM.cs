@@ -1,15 +1,5 @@
-﻿using System;
-using System.Linq;
-using Accord.Statistics.Models.Regression.Linear;
-using Accord.Statistics.Analysis;
-using Accord.IO;
-using Accord.Math;
-using System.Data;
-using Accord.MachineLearning.VectorMachines.Learning;
-using Accord.Math.Optimization.Losses;
+﻿using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
-using Accord.Controls;
-using Accord.MachineLearning;
 using Accord.MachineLearning.VectorMachines;
 
 namespace ML.Classifier
@@ -19,14 +9,8 @@ namespace ML.Classifier
     /// </summary>
     class SVM : IMethodLearning<MulticlassSupportVectorMachine<Linear>>
     {
-        /// <summary>
-        /// Обучающаяся выборка - входные параметры
-        /// </summary>
         public double[][] DataTrainInput { get; }
 
-        /// <summary>
-        /// Обучающаяся выборка - входные параметры
-        /// </summary>
         public int[] DataTrainOutput { get; }
 
         public SVM(double[][] dataTrainInput, int[] dataTrainOutput)

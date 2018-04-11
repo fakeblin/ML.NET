@@ -27,6 +27,7 @@ using Accord.Statistics.Distributions.Univariate;
 using Accord.Statistics.Distributions.Fitting;
 using Accord.MachineLearning.Performance;
 using Accord.Statistics;
+using ML.Classifier;
 
 namespace ML
 {
@@ -34,91 +35,102 @@ namespace ML
     {
         static void Main(string[] args)
         {
-            ImageToCSV itc = new ImageToCSV();
-            Bitmap[] bm = itc.InitImages(1);
-            itc.GetPixelImages(bm);
-            itc.SaveCSV();
 
-           // DataTable data_train = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\train.csv", true).ToTable();
-           // DataTable data_test = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\test.csv", true).ToTable();
+            //double[][] trainInputs =
+            //{
+            //// The first two are from class 0
+            //new double[] { -5, -2, -1 },
+            //new double[] { -5, -5, -6 },
 
-           // int[] trainOutputs = data_train.Columns["label"].ToArray<int>();
-           // data_train.Columns.Remove("label");
-           // double[][] trainInputs = data_train.ToJagged<double>();
+            //// The next four are from class 1
+            //new double[] {  2,  1,  1 },
+            //new double[] {  1,  1,  2 },
+            //new double[] {  1,  2,  2 },
+            //new double[] {  3,  1,  2 },
 
-           //// int[] testOutputs = data_test.Columns["label"].ToArray<int>();
-           // //data_test.Columns.Remove("label");
-           // double[][] testInputs = data_test.ToJagged<double>();
+            //// The last three are from class 2
+            //new double[] { 11,  5,  4 },
+            //new double[] { 15,  5,  6 },
+            //new double[] { 10,  5,  6 },
+            //};
 
+            //int[] trainOutputs =
+            //{
+            //    0, 0,        // First two from class 0
+            //    1, 1, 1, 1,  // Next four from class 1
+            //    2, 2, 2      // Last three from class 2
+            //};
 
+            //double[][] testInputs =
+            //{
+            //// The first two are from class 0
+            //new double[] { -3, -1, -1 },
+            //new double[] { -9, -7, -5 },
+            //};
 
-           // var knn = new KNN(trainInputs, trainOutputs, 4);
-           // var machine_knn = knn.MachineLearning();
-           // int[] predicted_knn = machine_knn.Decide(testInputs);
+            //int[] testOutputs =
+            //{
+            //    0, 0,        // First two from class 0
+            //};
 
-           // PrintResultsСlassifier show_knn = new PrintResultsСlassifier(machine_knn, testInputs);//, testOutputs);
+            DataTable dataTrain = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\CSV\train\train.csv", true).ToTable();
+            DataTable dataTest = new CsvReader(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\CSV\test\testWithLabels.csv", true).ToTable();
 
-           // show_knn.PrintProbabilities();
+            // I/O data //
+            int[] trainOutputs = dataTrain.Columns["label"].ToArray<int>();
+            dataTrain.Columns.Remove("label");
+            double[][] trainInputs = dataTrain.ToJagged<double>();
 
+            int[] testOutputs = dataTest.Columns["label"].ToArray<int>();
+            dataTest.Columns.Remove("label");
+            double[][] testInputs = dataTest.ToJagged<double>();
+            // I/O data //
 
+            // knn //
+            var knn = new KNN(trainInputs, trainOutputs, 4);
+            var machineKNN = knn.MachineLearning();
+            int[] predictedKNN = machineKNN.Decide(testInputs);
+            machineKNN.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\knn.bin");
 
+            OutputResultsСlassifier showKNN = new OutputResultsСlassifier(machineKNN, testInputs, testOutputs);
+            showKNN.SavePredicted(predictedKNN);
+            showKNN.SaveAccuracy();
+            // knn //
 
+            // nb //
+            var nb = new NB(trainInputs, trainOutputs);
+            var machineNB = nb.MachineLearning();
+            int[] predictedNB = machineNB.Decide(testInputs);
+            machineNB.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\nb.bin");
 
-            //show_knn.PrintPredicted(predicted_knn);
-            //show_knn.PrintAccuracy();
+            OutputResultsСlassifier show_nb = new OutputResultsСlassifier(machineNB, testInputs, testOutputs);
+            show_nb.SavePredicted(predictedNB);
+            show_nb.SaveAccuracy();
+            // nb //
 
-            //Console.WriteLine("BEGIN NaiveBayes");
+            // svm //
+            var svm = new SVM(trainInputs, trainOutputs);
+            var machineSVM = svm.MachineLearning();
+            int[] predictedSVM = machineKNN.Decide(testInputs);
+            machineKNN.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\svm.bin");
 
-            //var nb = new NB(trainInputs, trainOutputs);
-            //var machine_nb = nb.MachineLearning();
-            //int[] predicted_nb = machine_nb.Decide(testInputs);
+            OutputResultsСlassifier showSVM = new OutputResultsСlassifier(machineKNN, testInputs, testOutputs);
+            showSVM.SavePredicted(predictedSVM);
+            showSVM.SaveAccuracy();
+            // svm //
 
-            //PrintResultsСlassifier show_nb = new PrintResultsСlassifier(machine_nb, testInputs, testOutputs);
-            //show_nb.PrintPredicted(predicted_knn);
-            //show_nb.PrintAccuracy();
-            //show_nb.PrintProbabilities();
+            // mlr //
+            var mlr = new MLR(trainInputs, trainOutputs);
+            var machineMLR = mlr.MachineLearning();
+            int[] predictedMLR = machineKNN.Decide(testInputs);
+            machineKNN.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\mlr.bin");
 
-            //double loss = new ZeroOneLoss(testOutputs).Loss(predicted_knn);
-            ////loss , machine_knn <double[]>
+            OutputResultsСlassifier showMLR = new OutputResultsСlassifier(machineMLR, testInputs, testOutputs);
+            showMLR.SavePredicted(predictedSVM);
+            showMLR.SaveAccuracy();
+            showMLR.SaveProbabilities(machineMLR);
+            // mlr //
 
-
-            //var cv = CrossValidation.Create(
-
-            //    k: 10, // We will be using 10-fold cross validation
-
-            //    // First we define the learning algorithm:
-            //    learner: (p) => new NaiveBayesLearning(),
-
-            //    // Now we have to specify how the n.b. performance should be measured:
-            //    loss: (actual, expected) => new ZeroOneLoss(expected).Loss(actual),
-
-            //    // This function can be used to perform any special
-            //    // operations before the actual learning is done, but
-            //    // here we will just leave it as simple as it can be:
-            //    fit: (NaiveBayesLearning teacher, double[][] x, int[] y, int[] w) => teacher.Learn(x, y, w),
-
-            //    // Finally, we have to pass the input and output data
-            //    // that will be used in cross-validation. 
-            //    x: testInputs, y: testOutputs
-            //);
-
-            //// After the cross-validation object has been created,
-            //// we can call its .Learn method with the input and 
-            //// output data that will be partitioned into the folds:
-            //var result = cv.Learn(testInputs, testOutputs);
-
-            //// We can grab some information about the problem:
-            //int numberOfSamples = result.NumberOfSamples; // should be 15
-            //int numberOfInputs = result.NumberOfInputs;   // should be 4
-            //int numberOfOutputs = result.NumberOfOutputs; // should be 3
-
-            //double trainingError = result.Training.Mean; // should be 0
-            //double validationError = result.Validation.Mean; // should be 0.15 (+/- var. 0.11388888888888887)
-
-            //// If desired, compute an aggregate confusion matrix for the validation sets:
-            //GeneralConfusionMatrix gcm = result.ToConfusionMatrix(inputs, outputs);
-
-            //Console.ReadLine();
         }
     }
 }

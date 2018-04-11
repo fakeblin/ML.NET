@@ -100,22 +100,22 @@ namespace ML
 
         public void SaveCSV(string path = @"H:\Documents\Visual Studio 2015\Projects\ML\ML\CSV\testConverted\")
         {
-            string time_before = DateTime.Now.ToString();
-            string time_after = "";
+            string timeBefore = DateTime.Now.ToString();
+            string timeAfter = "";
 
-            foreach (char c in time_before)
+            foreach (char c in timeBefore)
             {
                 if (c == ' ')
-                    time_after += '-';
+                    timeAfter += '-';
                 else if (c == ':')
-                    time_after += '_';
+                    timeAfter += '_';
                 else
-                    time_after += c;
+                    timeAfter += c;
             }
 
-            FileStream csvCreate = new FileStream(path + time_after + ".csv", FileMode.CreateNew); //создание нового файла
+            FileStream csvCreate = new FileStream(path + timeAfter + ".csv", FileMode.CreateNew); //создание нового файла
             csvCreate.Close();
-            using (CsvWriter writer = new CsvWriter(path + time_after + ".csv", ','))
+            using (CsvWriter writer = new CsvWriter(path + timeAfter + ".csv", ','))
             {
                 writer.WriteHeaders(Pixel);
                 writer.Write(Values);

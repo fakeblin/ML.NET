@@ -95,10 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="CSV\test\test.csv" />
-    <None Include="CSV\test\test_lite.csv" />
+    <None Include="CSV\test\testNotLabels.csv" />
+    <None Include="CSV\test\testNotLabelsLite.csv" />
+    <None Include="CSV\test\testWithLabels.csv" />
     <None Include="CSV\train\train.csv" />
-    <None Include="CSV\train\train_lite.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -1056,6 +1056,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CSV\testConverted\" />
+    <Folder Include="models\" />
     <Folder Include="SaveResults\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,6 @@
 ﻿using Accord.Math.Optimization;
 using Accord.Statistics.Models.Regression;
 using Accord.Statistics.Models.Regression.Fitting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ML.Classifier
 {
