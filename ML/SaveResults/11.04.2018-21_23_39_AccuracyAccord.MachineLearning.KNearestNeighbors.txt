@@ -1,0 +1,1 @@
+Accuracy for Accord.MachineLearning.KNearestNeighbors: 97,1 %

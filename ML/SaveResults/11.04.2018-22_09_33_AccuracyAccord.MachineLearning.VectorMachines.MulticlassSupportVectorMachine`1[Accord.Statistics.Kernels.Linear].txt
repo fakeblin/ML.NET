@@ -1,0 +1,1 @@
+Accuracy for Accord.MachineLearning.VectorMachines.MulticlassSupportVectorMachine`1[Accord.Statistics.Kernels.Linear]: 94 %

@@ -1,0 +1,1 @@
+Accuracy for Accord.MachineLearning.Bayes.NaiveBayes`1[Accord.Statistics.Distributions.Univariate.NormalDistribution]: 56,2 %

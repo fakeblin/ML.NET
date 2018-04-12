@@ -1,0 +1,1 @@
+Accuracy for Accord.Statistics.Models.Regression.MultinomialLogisticRegression: 87 %

@@ -86,7 +86,7 @@ namespace ML
             double[][] testInputs = dataTest.ToJagged<double>();
             // I/O data //
 
-            // knn //
+            // knn //B
             var knn = new KNN(trainInputs, trainOutputs, 4);
             var machineKNN = knn.MachineLearning();
             int[] predictedKNN = machineKNN.Decide(testInputs);
@@ -111,10 +111,10 @@ namespace ML
             // svm //
             var svm = new SVM(trainInputs, trainOutputs);
             var machineSVM = svm.MachineLearning();
-            int[] predictedSVM = machineKNN.Decide(testInputs);
-            machineKNN.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\svm.bin");
+            int[] predictedSVM = machineSVM.Decide(testInputs);
+            machineSVM.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\svm.bin");
 
-            OutputResultsСlassifier showSVM = new OutputResultsСlassifier(machineKNN, testInputs, testOutputs);
+            OutputResultsСlassifier showSVM = new OutputResultsСlassifier(machineSVM, testInputs, testOutputs);
             showSVM.SavePredicted(predictedSVM);
             showSVM.SaveAccuracy();
             // svm //
@@ -122,8 +122,8 @@ namespace ML
             // mlr //
             var mlr = new MLR(trainInputs, trainOutputs);
             var machineMLR = mlr.MachineLearning();
-            int[] predictedMLR = machineKNN.Decide(testInputs);
-            machineKNN.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\mlr.bin");
+            int[] predictedMLR = machineMLR.Decide(testInputs);
+            machineMLR.Save(@"H:\Documents\Visual Studio 2015\Projects\ML\ML\models\mlr.bin");
 
             OutputResultsСlassifier showMLR = new OutputResultsСlassifier(machineMLR, testInputs, testOutputs);
             showMLR.SavePredicted(predictedSVM);
